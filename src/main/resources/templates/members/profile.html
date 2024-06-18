@@ -878,24 +878,26 @@
 												role="tabpanel"
 											>
 												<div class="profile-setting">
-													<form>
+													<form name="editform" th:object="${memberDto}" method="post" th:action="@{../members/edit}" onsubmit="return true;" class="tab-wizard2 wizard-circle wizard">
 														<ul class="profile-edit-list row">
 															<li class="weight-500 col-md-6">
 																<h4 class="text-blue h5 mb-20">
 																	Edit Your Personal Setting
 																</h4>
 																<div class="form-group">
-																	<label>Full Name</label>
+																	<label>User Name</label>
 																	<input
 																		class="form-control form-control-lg"
-																		type="text"
+																	    type="text"
+																	    th:field="${dto.name}"
 																	/>
 																</div>
 																<div class="form-group">
-																	<label>Title</label>
+																	<label>Id</label>
 																	<input
 																		class="form-control form-control-lg"
 																		type="text"
+																		th:field="${dto.id}"
 																	/>
 																</div>
 																<div class="form-group">
@@ -903,13 +905,40 @@
 																	<input
 																		class="form-control form-control-lg"
 																		type="email"
+																		th:field="${dto.email}"
 																	/>
 																</div>
+																<div class="form-group">
+																	<label>Password</label>
+																	<input
+																		class="form-control form-control-lg"
+																		type="password"
+																		th:field="${dto.pw}"
+																	/>
+																</div>
+																<!--
 																<div class="form-group">
 																	<label>Date of birth</label>
 																	<input
 																		class="form-control form-control-lg date-picker"
 																		type="text"
+																	/>
+																</div>
+																-->
+																<div class="form-group">
+																	<label>Phone</label>
+																	<input
+																			class="form-control form-control-lg"
+																			type="text"
+																			th:field="${dto.phone}"
+																	/>
+																</div>
+																<div class="form-group">
+																	<label>Address</label>
+																	<input
+																			class="form-control form-control-lg"
+																			type="text"
+																			th:field="${dto.address}"
 																	/>
 																</div>
 																<div class="form-group">
@@ -947,6 +976,7 @@
 																		</div>
 																	</div>
 																</div>
+																<!--
 																<div class="form-group">
 																	<label>Country</label>
 																	<select
@@ -959,13 +989,8 @@
 																		<option>United Kingdom</option>
 																	</select>
 																</div>
-																<div class="form-group">
-																	<label>State/Province/Region</label>
-																	<input
-																		class="form-control form-control-lg"
-																		type="text"
-																	/>
-																</div>
+																-->
+
 																<div class="form-group">
 																	<label>Postal Code</label>
 																	<input

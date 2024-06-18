@@ -21,8 +21,9 @@ public class MemberServiceTest {
                     .pw("cometrue")
                     .name("name-" + i)
                     .email("id-" + i + "@induk.ac.kr")
+                    .phone("010-0000-000" + i)
+                    .address("Seoul" + i)
                     .build();
-
             memberService.create(dto);
         });
     }
@@ -53,11 +54,13 @@ public class MemberServiceTest {
     @Test
     public void registerOne() {
         MemberDto dto = MemberDto.builder()
-                    .id("admin")
-                    .pw("cometrue")
-                    .name("administrator")
-                    .email("admin" + "@induk.ac.kr")
-                    .build();
+                .id("admin")
+                .pw("cometrue")
+                .name("administrator")
+                .email("admin" + "@induk.ac.kr")
+                .phone("010-1234-5678")
+                .address("Seoul")
+                .build();
 
         if(memberService.create(dto) > 0)
             System.out.println("success");

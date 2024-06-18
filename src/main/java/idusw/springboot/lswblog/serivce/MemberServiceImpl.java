@@ -48,6 +48,8 @@ public class MemberServiceImpl implements MemberService {
         return 0;
     }
 
+
+
     @Override
     public int delete(MemberDto memberDto) {
         return 0;
@@ -58,4 +60,6 @@ public class MemberServiceImpl implements MemberService {
         Optional<MemberEntity> memberEntityOptional = memberRepository.findByIdAndPw(memberDto.getId(), memberDto.getPw());
         return memberEntityOptional.map(this::entityToDto).orElse(null);
     }
+
+
 }

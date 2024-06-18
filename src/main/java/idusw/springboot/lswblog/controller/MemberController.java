@@ -85,4 +85,24 @@ public class MemberController {
             return "./errors/error-message";
     }
 
+    @GetMapping("edit")
+    public String getEdit(Model model, @RequestParam("idx") Long idx) {
+        MemberDto memberDto = memberService.readByIdx(idx);
+        if (memberDto == null) {
+            return "./errors/error-message";
+        }
+        model.addAttribute("memberDto", memberDto);
+        return "redirect:/members/profile"; // 수정할 프로필 정보가 있는 페이지로 이동
+    }
+
+    @PostMapping("edit")
+    public String postEdit(@ModelAttribute("memberDto") MemberDto memberDto, Model model) {
+        System.out.println(memberDto);
+        // 수정 처리 -> service -> repository -> service -> controller
+        if(memberService.update(memberDto) > 0) // 정상적으로 레코드의 변화가 발생하는 경우 영향받는 레코드 수를 반환
+            return "redirect:/members/profile";
+        else
+            return "./errors/error-message";
+    }
+
 }

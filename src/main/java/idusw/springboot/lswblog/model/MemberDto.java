@@ -25,4 +25,6 @@ public class MemberDto { // DTO(Data Transfer Object) or VO(Valuable Object)
     private String email;
     private LocalDateTime regDate; // <- 게시글 등록일자
     private LocalDateTime modDate;
+    private String phone;
+    private String address;
 }
