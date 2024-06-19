@@ -105,4 +105,45 @@ public class MemberController {
             return "./errors/error-message";
     }
 
+    @GetMapping("update/{idx}")
+    public String getUpdateForm(@PathVariable("idx") Long idx, Model model) {
+        MemberDto dto = memberService.readByIdx(idx);
+        model.addAttribute("memberDto", dto);
+        return "./members/update";
+    }
+
+    // post 방식으로 members/update를 요청하면 해당 회원 정보를 수정하고, 수정 후 main/index.html로 이동
+    @PostMapping("update")
+    public String postUpdate(@ModelAttribute("memberDto") MemberDto memberDto, HttpSession session, Model model) {
+        // 이전에 로그인한 사용자의 정보를 가져옵니다.
+        Long idx = (Long) session.getAttribute("idx");
+        // 수정된 정보를 새로운 DTO에 설정합니다.
+        MemberDto updatedDto = MemberDto.builder()
+                .idx(idx) // 해당 사용자의 고유 식별자
+                .name(memberDto.getName()) // 새로운 이름
+                .email(memberDto.getEmail())
+                .id(memberDto.getId())
+                .build();
+        // 회원 정보를 업데이트합니다.
+        if (memberService.update(updatedDto) > 0)
+            return "redirect:/"; // 수정 성공 시 메인 페이지로 이동
+        else
+            return "./errors/error-message"; // 수정 실패 시 에러 페이지로 이동
+    }
+
+    @PostMapping("delete")
+    public String deleteMember(@ModelAttribute("memberDto") MemberDto memberDto, HttpSession session, Model model) {
+        Long idx = memberDto.getIdx();
+        String msg;
+
+        if (idx != null && memberService.delete(memberDto) > 0) {
+            session.invalidate();
+            return "redirect:/";
+        } else {
+            msg = "탈퇴 실패: 유효하지 않은 회원 정보입니다.";
+        }
+        model.addAttribute("message", msg);
+        return "./errors/error-message";
+    }
+
 }

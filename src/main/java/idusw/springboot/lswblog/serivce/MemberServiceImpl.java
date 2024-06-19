@@ -43,16 +43,41 @@ public class MemberServiceImpl implements MemberService {
         return dtoList;
     }
 
+
     @Override
     public int update(MemberDto memberDto) {
-        return 0;
+        Optional<MemberEntity> memberEntityOptional = memberRepository.findById(memberDto.getIdx());
+        if (memberEntityOptional.isPresent()) {
+            MemberEntity existingEntity = memberEntityOptional.get();
+            // 기존 엔티티에서 새로운 정보를 업데이트합니다.
+            existingEntity.setName(memberDto.getName());
+            existingEntity.setEmail(memberDto.getEmail());
+
+            // 엔티티를 저장하여 업데이트를 반영합니다.
+            memberRepository.save(existingEntity);
+            return 1; // 업데이트 성공
+        } else {
+            return 0; // 업데이트 실패
+        }
     }
-
-
 
     @Override
     public int delete(MemberDto memberDto) {
-        return 0;
+        Long idx = memberDto.getIdx();
+        if (idx == null) {
+            System.out.println("delete: idx is null");
+            return 0;
+        }
+
+        Optional<MemberEntity> memberEntityOptional = memberRepository.findById(idx);
+        if (memberEntityOptional.isPresent()) {
+            memberRepository.delete(memberEntityOptional.get());
+            System.out.println("delete: member deleted successfully");
+            return 1;
+        } else {
+            System.out.println("delete: member not found");
+            return 0;
+        }
     }
 
     @Override
@@ -60,6 +85,8 @@ public class MemberServiceImpl implements MemberService {
         Optional<MemberEntity> memberEntityOptional = memberRepository.findByIdAndPw(memberDto.getId(), memberDto.getPw());
         return memberEntityOptional.map(this::entityToDto).orElse(null);
     }
+
+
 
 
 }
