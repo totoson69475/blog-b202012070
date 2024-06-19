@@ -14,6 +14,7 @@ public interface MemberService {
 
     MemberDto loginById(MemberDto memberDto); // id / pw 활용
 
+    List<MemberDto> searchMembers(String name, String email, String phone);
     // Conversion
     default MemberEntity dtoToEntity(MemberDto memberDto) {
         MemberEntity entity = MemberEntity.builder()

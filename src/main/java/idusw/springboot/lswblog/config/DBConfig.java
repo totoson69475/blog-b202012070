@@ -9,13 +9,13 @@ import javax.sql.DataSource;
 
 @Configuration
 public class DBConfig {
-    @Value("${db.url}")
+    @Value("jdbc:mysql://localhost:3306/db_202012070")
     private String url;
 
-    @Value("${db.username}")
+    @Value("root")
     private String username;
 
-    @Value("${db.password}")
+    @Value("cometrue")
     private String password;
 
     @Value("${db.driver-class-name}")

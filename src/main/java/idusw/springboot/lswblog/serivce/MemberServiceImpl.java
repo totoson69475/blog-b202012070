@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class MemberServiceImpl implements MemberService {
@@ -86,6 +87,11 @@ public class MemberServiceImpl implements MemberService {
         return memberEntityOptional.map(this::entityToDto).orElse(null);
     }
 
+    @Override
+    public List<MemberDto> searchMembers(String name, String email, String phone) {
+        List<MemberEntity> entities = memberRepository.searchMembers(name, email, phone);
+        return entities.stream().map(this::entityToDto).collect(Collectors.toList());
+    }
 
 
 

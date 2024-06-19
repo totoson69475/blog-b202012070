@@ -1,6 +1,7 @@
 package idusw.springboot.lswblog.controller;
 
 import idusw.springboot.lswblog.model.BlogDto;
+import idusw.springboot.lswblog.model.MemberDto;
 import idusw.springboot.lswblog.serivce.BlogService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,6 +18,13 @@ public class BlogController {
 
     public BlogController(BlogService blogService) {
         this.blogService = blogService;
+    }
+
+    @GetMapping("")
+    public String getBlogs(Model model) {
+        List<BlogDto> dtoList = blogService.readList();
+        model.addAttribute("dtoList", dtoList);
+        return "./blogs/blog";
     }
 
     @GetMapping("/delete/{idx}")

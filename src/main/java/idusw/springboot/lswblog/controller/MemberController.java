@@ -146,4 +146,15 @@ public class MemberController {
         return "./errors/error-message";
     }
 
+    @GetMapping("/search")
+    public String searchMembers(@RequestParam(required = false) String name,
+                                @RequestParam(required = false) String email,
+                                @RequestParam(required = false) String phone,
+                                Model model) {
+        List<MemberDto> dtoList = memberService.searchMembers(name, email, phone);
+        model.addAttribute("dtoList", dtoList);
+        return "members/list"; // 테이블이 있는 HTML 파일명
+    }
+
+
 }
